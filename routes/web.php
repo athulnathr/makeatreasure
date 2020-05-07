@@ -24,3 +24,5 @@ Route::post('/join-now' , 'ClientController@store')->name('join-now');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/details' , 'HomeController@details')->name('details');
+Route::post('/update' , 'HomeController@update')->name('user-update');
