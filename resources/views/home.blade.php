@@ -222,14 +222,13 @@
         });
         $('#update_form').submit(function (e) {
             e.preventDefault();
-            console.log('huupx')
             if ($('#update_form').valid()) {
                 $.ajax({
                     type: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url: "{{route('details')}}",
+                    url: "{{route('user-update')}}",
                     data: {
                         id: $('#update_form').attr('data-selected-id'),
                         name: $('#name_field').val(),

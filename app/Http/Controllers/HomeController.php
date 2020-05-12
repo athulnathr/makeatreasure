@@ -61,7 +61,7 @@ class HomeController extends Controller
     public function update(Request $request){
         try{
             DB::beginTransaction();
-            $user = Client::update([
+            $user = Client::updateOrCreate([
                 'id' => $request->id
             ] , [
                 'name' => $request->name,
