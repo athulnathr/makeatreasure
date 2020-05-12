@@ -1,17 +1,16 @@
 @extends('layouts.app')
 @section('heads')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 <link rel="stylesheet" href="{{URL::to('assets/css/admin_styles.css')}}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script type="text/javascript" src="{{URL::to('assets/js/datatables.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script> -->
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js" defer></script>
 
-<!-- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js" defer></script>
+<!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> -->
+<!-- <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
 @endsection
 @section('content')
 <div class="container-fluid ">
@@ -21,7 +20,7 @@
                 <div class="card-header">Clients</div>
 
                 <div class="card-body">
-                    <table class="table table-bordered data-table table-responsive">
+                    <table class="table table-bordered data-table">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -104,7 +103,7 @@
             }
         });
 
-        var table = $('.data-table').dataTable({
+        var table = $('.data-table').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('home') }}",
@@ -172,15 +171,16 @@
 
         })
 
-        $.validator.addMethod('testmail', function (value) {
-            return /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-                .test(value);
-        }, 'Please enter a valid email.');
 
         $.validator.addMethod('testwallet', function (value) {
             return /^0x[a-fA-F0-9]{40}$/
                 .test(value);
         }, 'Please enter a valid wallet address.');
+
+        $.validator.addMethod('testmail', function (value) {
+            return /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+                .test(value);
+        }, 'Please enter a valid email.');
 
         $('#update_form').validate({
             rules: {
@@ -232,11 +232,11 @@
                     url: "{{route('details')}}",
                     data: {
                         id: $('#update_form').attr('data-selected-id'),
-                        name: $('#name_field').val(user_data.name),
-                        email: $('#email_field').val(user_data.email),
-                        phone: $('#phone_field').val(user_data.phone),
-                        mm_id: $('#mm_id_field').val(user_data.mm_id),
-                        wallet_id: $('#wallet_field').val(user_data.wallet_id),
+                        name: $('#name_field').val(),
+                        email: $('#email_field').val(),
+                        phone: $('#phone_field').val(),
+                        mm_id: $('#mm_id_field').val(),
+                        wallet_id: $('#wallet_field').val(),
                     },
                     success: function (data) {
                         $('#editModal').modal('hide');
@@ -246,7 +246,6 @@
                     }
                 });
             }
-            e.preventDefault();
         })
 
     })
